@@ -97,7 +97,7 @@ func run() error {
 
 		url := conf.AuthCodeURL(state)
 
-		ctx.Redirect(http.StatusTemporaryRedirect, url)
+		ctx.Redirect(http.StatusFound, url)
 	})
 	r.GET("/oauth/github/callback", func(ctx *gin.Context) {
 		session := sessions.Default(ctx)
@@ -133,7 +133,7 @@ func run() error {
 		session.Set("token", token)
 		session.Save()
 		log.Println("token:", token)
-		ctx.Redirect(http.StatusTemporaryRedirect, "http://localhost:5173/")
+		ctx.Redirect(http.StatusFound, "http://localhost:5173/")
 	})
 
 	authed := r.Group("")
