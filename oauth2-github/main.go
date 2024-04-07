@@ -65,6 +65,7 @@ func run() error {
 			"user:email",
 			"repo",
 			"metadata:read",
+			"read:org",
 		},
 		Endpoint: oauth2.Endpoint{
 			AuthURL:   "https://github.com/login/oauth/authorize",
@@ -171,6 +172,23 @@ func run() error {
 
 		ctx.JSON(http.StatusOK, gin.H{
 			"user": user,
+		})
+	})
+	authed.GET("/api/user/orgs", func(ctx *gin.Context) {
+		client, err := getClient(ctx)
+		if err != nil {
+			ctx.AbortWithError(http.StatusInternalServerError, err)
+			return
+		}
+		var orgs []map[string]any
+		if err := client.get("https://api.github.com/user/orgs", &orgs); err != nil {
+			log.Println("failed to retrieve orgs")
+			ctx.AbortWithError(http.StatusInternalServerError, err)
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{
+			"orgs": orgs,
 		})
 	})
 	authed.GET("/api/repos", func(ctx *gin.Context) {
