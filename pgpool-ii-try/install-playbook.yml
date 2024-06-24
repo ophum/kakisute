@@ -1,0 +1,5 @@
+- hosts: servers
+  become: true
+  roles:
+    - install_postgresql14
+    - install_pgpool2

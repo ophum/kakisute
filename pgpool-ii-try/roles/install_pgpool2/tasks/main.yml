@@ -1,0 +1,6 @@
+---
+- name: Install pgpool2
+  ansible.builtin.apt:
+    name: pgpool2
+    state: present
+    update_cache: yes
