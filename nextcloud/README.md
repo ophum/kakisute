@@ -44,3 +44,32 @@ http://localhost:8080/ にアクセスして管理ユーザーの作成を行う
 - s3やftpなど外部ストレージに接続できる
 - 接続したストレージはフォルダとしてユーザーに見える
 - 利用できるユーザー・グループを指定できる
+
+## バックアップ/リストア
+
+### バックアップ
+
+https://docs.nextcloud.com/server/latest/admin_manual/maintenance/backup.html
+
+メンテナンスモードにしておく。
+終了時にoffにする。
+
+`-u 33`はwww-dataユーザーで実行
+
+```bash
+docker compose exec -it -u 33 app bash
+php occ maintenance:mode --on
+```
+
+データのバックアップは `config/` `data/` `themes/`を対象にしていれば良さそう。またはnextcloudのディレクトリ全体。
+
+```bash
+rsync -Aavx nextcloud/ nextcloud-dirbkp_`date +"%Y%m%d"`/
+```
+
+
+DBのバックアップはmysqldumpで出力する。
+
+```bash
+mysqldump --single-transaction -h [server] -u [username] -p[password] [db_name] > nextcloud-sqlbkp_`date +"%Y%m%d"`.bak
+```
