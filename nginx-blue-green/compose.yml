@@ -1,0 +1,22 @@
+services:
+  nginx:
+    image: nginx
+    ports:
+    - 8080:80
+    volumes:
+    - ./sites-available/:/etc/nginx/sites-available/
+    - ./scripts/:/etc/nginx/scripts/
+
+  blue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      RESPONSE: blue
+
+  green:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      RESPONSE: green
