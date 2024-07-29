@@ -1,0 +1,16 @@
+---
+- name: Add Postgresql config
+  ansible.builtin.copy:
+    src: postgresql.conf
+    dest: /var/lib/postgresql/16/data/postgresql.conf
+    owner: postgres
+    group: postgres
+    mode: '0644'
+
+- name: Add pg_hba.conf
+  ansible.builtin.copy:
+    src: pg_hba.conf
+    dest: /var/lib/postgresql/16/data/pg_hba.conf
+    owner: postgres
+    group: postgres
+    mode: '0644'

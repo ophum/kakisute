@@ -1,8 +1,0 @@
----
-- name: Install postgresql 14
-  ansible.builtin.apt:
-    name: postgresql-14
-    state: present
-    update_cache: yes
-
-    

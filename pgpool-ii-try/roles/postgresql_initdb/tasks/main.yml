@@ -1,0 +1,31 @@
+---
+- name: initdb
+  become: true
+  become_user: postgres
+  ansible.builtin.shell: |
+    /usr/lib/postgresql/16/bin/initdb -D /var/lib/postgresql/16/data
+    /usr/lib/postgresql/16/bin/pg_ctl start -D /var/lib/postgresql/16/data
+
+- name: add pgpool role
+  become: true
+  become_user: postgres
+  community.postgresql.postgresql_user:
+    name: pgpool
+    password: pgpool
+
+
+- name: add repl role
+  become: true
+  become_user: postgres
+  community.postgresql.postgresql_user:
+    name: repl
+    password: repl
+    role_attr_flags: replication
+
+- name: add postgres role
+  become: true
+  become_user: postgres
+  community.postgresql.postgresql_user:
+    name: postgres
+    password: postgres
+

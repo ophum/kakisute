@@ -1,0 +1,28 @@
+---
+- name: Add postgresql asc
+  ansible.builtin.get_url:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    dest: /etc/apt/keyrings/postgresql.asc
+    mode: '0644'
+    force: true
+
+- name: Add postgresql apt repository
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/etc/apt/keyrings/postgresql.asc] https://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main
+    state: present
+
+- name: Install postgresql 16
+  ansible.builtin.apt:
+    pkg:
+    - python3-psycopg2
+    - postgresql-16
+    - postgresql-16-pgpool2
+    state: present
+    update_cache: yes
+
+- name: disable systemd service
+  ansible.builtin.systemd:
+    name: postgresql.service
+    state: stopped
+    enabled: false
+    
