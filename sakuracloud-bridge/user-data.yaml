@@ -1,0 +1,8 @@
+#cloud-config
+fqdn: ${fqdn}
+password: $6$rounds=4096$h2xDoQtATt$AaQK928JO.RO0.9.cgyi.dAx8egj6ijfn8C1kKYOzFeXQ1o.y9HbqmWfWZmmH2JrNPP.iSbEjRP1YxO8hKy3O0
+chpasswd:
+  expire: false
+ssh_pwauth: false
+ssh_authorized_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILe0PIqPM0hrwnH2l625oXrgo9eP8ALZTu+FuvwE1W0z
