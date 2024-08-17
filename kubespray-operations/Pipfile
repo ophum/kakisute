@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+distlib = "*"
+ansible = "==9.8.0"
+netaddr = "==1.3.0"
+jmespath = "==1.0.1"
+jsonschema = "==4.23.0"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.3"

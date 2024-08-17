@@ -1,0 +1,12 @@
+---
+- name: Update kube-apiserver config
+  ansible.builtin.lineinfile:
+    dest: /etc/kubernetes/manifests/kube-apiserver.yaml
+    state: present
+    regexp: "- --etcd-servers=.*"
+    line: |
+      {% set servers  = [] %}
+      {% for host in groups['etcd'] %}
+      {%  set _ = servers.append('https://' + hostvars[host].ansible_host + ':2379') %}
+      {% endfor %}
+          - --etcd-servers={{ servers | join(',')}}

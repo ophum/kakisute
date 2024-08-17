@@ -1,0 +1,5 @@
+---
+- name: Refresh facts cache
+  ansible.builtin.import_playbook: kubernetes_sigs.kubespray.facts
+- name: Install Kubernetes
+  ansible.builtin.import_playbook: kubernetes_sigs.kubespray.scale

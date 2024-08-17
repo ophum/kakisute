@@ -1,0 +1,10 @@
+---
+- name: Restart kube-system/nginx-proxy
+  hosts: kube_node
+  roles:
+    - restart_kube_system_nginx_proxy
+
+- name: Update kube-apiserver config
+  hosts: kube_control_plane
+  roles:
+    - update_kube_apiserver_etcd_servers_config

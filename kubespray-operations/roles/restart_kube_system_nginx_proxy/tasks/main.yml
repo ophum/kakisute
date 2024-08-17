@@ -1,0 +1,9 @@
+---
+- name: Restart kube-system/nginx-proxy
+  ansible.builtin.shell: |
+    crictl ps | grep nginx-proxy | awk '{print $1}' | xargs crictl stop
+  register: result
+
+- name: Display stdout
+  ansible.builtin.debug:
+    msg: "{{ result.stdout }}"
