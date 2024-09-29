@@ -1,0 +1,21 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>oauth2 client test site</title>
+</head>
+<body>
+<h1>oauth2 client test site</h1>
+{{ if ne .FlashMessage "" }}
+<p>{{ .FlashMessage }}</p>
+{{ end }}
+
+<div>
+<a href="/authed">authed page</a> 
+</div>
+
+<div>
+<a href="/oauth">oauth login</a>
+</div>
+
+</body>
+</html>
