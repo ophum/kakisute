@@ -5,3 +5,13 @@ etcd_listen_client_urls: "http://{{ nic1_ip }}:2379"
 etcd_initial_cluster: etcd1=http://10.0.0.1:2380,etcd2=http://10.0.0.2:2380,etcd3=http://10.0.0.3:2380
 etcd_initial_cluster_state: new
 etcd_initial_cluster_token: token-01
+
+prometheus_targets:
+  node:
+    - targets:
+        - localhost:9100
+        - 10.0.0.1:9100
+        - 10.0.0.2:9100
+        - 10.0.0.3:9100
+      labels:
+        service: node_exporter

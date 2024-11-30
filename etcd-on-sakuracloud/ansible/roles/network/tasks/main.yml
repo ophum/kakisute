@@ -7,3 +7,5 @@
     owner: root
     group: root
   notify: apply netplan
+  tags:
+    - network

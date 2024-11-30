@@ -4,4 +4,8 @@
   remote_user: ubuntu
   roles:
     - network
-    - etcd
+    - role: etcd
+      when: inventory_hostname != "bench"
+    - prometheus.prometheus.node_exporter
+    - role: prometheus.prometheus.prometheus
+      when: inventory_hostname == "bench"
