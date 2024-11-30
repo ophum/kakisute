@@ -1,0 +1,25 @@
+[Unit]
+Description=etcd key-value store
+Documentation=https://github.com/etcd-io/etcd
+After=network-online.target local-fs.target remote-fs.target time-sync.target
+Wants=network-online.target local-fs.target remote-fs.target time-sync.target
+
+[Service]
+User=etcd
+Type=notify
+Environment=ETCD_DATA_DIR=/var/lib/etcd
+Environment=ETCD_NAME=%H
+Environment=ETCD_INITIAL_ADVERTISE_PEER_URLS={{ etcd_initial_advertise_peer_urls }}
+Environment=ETCD_LISTEN_PEER_URLS={{ etcd_listen_peer_urls }}
+Environment=ETCD_ADVERTISE_CLIENT_URLS={{ etcd_advertise_client_urls }}
+Environment=ETCD_LISTEN_CLIENT_URLS={{ etcd_listen_client_urls }}
+Environment=ETCD_INITIAL_CLUSTER={{ etcd_initial_cluster }}
+Environment=ETCD_INITIAL_CLUSTER_STATE={{ etcd_initial_cluster_state }}
+Environment=ETCD_INITIAL_CLUSTER_TOKEN={{ etcd_initial_cluster_token }}
+ExecStart=/usr/bin/etcd
+Restart=always
+RestartSec=10s
+LimitNOFILE=40000
+
+[Install]
+WantedBy=multi-user.target

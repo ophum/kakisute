@@ -1,0 +1,9 @@
+---
+- name: Set netplan config
+  ansible.builtin.template:
+    src: 60-netcfg.yaml.j2
+    dest: /etc/netplan/60.netcfg.yaml
+    mode: "0600"
+    owner: root
+    group: root
+  notify: apply netplan
