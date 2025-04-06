@@ -1,9 +1,11 @@
 package main
 
 import (
-	mcclient "github.com/ophum/mc-client"
+	"fmt"
+
+	"github.com/sacloud/iaas-service-go"
 )
 
 func main() {
-	var _ mcclient.Interface
+	fmt.Println(iaas.Version)
 }
