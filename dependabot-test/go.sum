@@ -1,0 +1,8 @@
+github.com/gorcon/rcon v1.3.5 h1:YE/Vrw6R99uEP08wp0EjdPAP3Jwz/ys3J8qxI1nYoeU=
+github.com/gorcon/rcon v1.3.5/go.mod h1:zR1qfKZttF8vAgH1NsP6CdpachOvLDq8jE64NboTpIM=
+github.com/ophum/mc-client v0.0.0-20240824062930-6178b7800d2f h1:vQ1pYYIaz66RN+Nyt1r5Ck8zvOXWfARtcUXz+EvL45w=
+github.com/ophum/mc-client v0.0.0-20240824062930-6178b7800d2f/go.mod h1:xj9Wc+K8oD7D4AR5/s6YSeU2jOMUtdc5UCStEyJV1Sk=
+github.com/ophum/mc-client v0.0.0-20240824073133-0e87e4637a5a h1:TXI3e1YZ+eC9nTsIwxwzrZGNGPI8iRQ9VcogIsqB7MI=
+github.com/ophum/mc-client v0.0.0-20240824073133-0e87e4637a5a/go.mod h1:egPRNEXu4+nx3owx2J6uJyuNmjcQo+ym3c2r8/Lxjkg=
+github.com/ophum/mc-client v0.0.0-20250118123308-305d862d2367 h1:hHJyOm3hzntAldjYiXLpgLUon+2S/Ya+cPfaB92NoVk=
+github.com/ophum/mc-client v0.0.0-20250118123308-305d862d2367/go.mod h1:egPRNEXu4+nx3owx2J6uJyuNmjcQo+ym3c2r8/Lxjkg=
