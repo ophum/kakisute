@@ -1,0 +1,8 @@
+p, readWriter, get*, read
+p, readWriter, set*, write
+p, reader, get*, read
+g, teamA, readWriter
+g, teamB, reader
+g, alice, teamA
+g, bob, teamA
+g, doe, teamB
