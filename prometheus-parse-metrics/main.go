@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"slices"
 
 	io_prometheus_client "github.com/prometheus/client_model/go"
 	"github.com/prometheus/common/expfmt"
@@ -26,9 +27,9 @@ func main() {
 		panic(err)
 	}
 
-	outMetrics := []*io_prometheus_client.MetricFamily{}
+	names := []string{}
 	for _, metric := range metrics {
-		outMetrics = append(outMetrics, metric)
+		names = append(names, metric.GetName())
 		for _, v := range metric.GetMetric() {
 			name := "greeting"
 			value := "hello ^^"
@@ -39,8 +40,14 @@ func main() {
 		}
 	}
 
+	slices.Sort(names)
+	result := []*io_prometheus_client.MetricFamily{}
+	for _, name := range names {
+		result = append(result, metrics[name])
+	}
+
 	b := bytes.Buffer{}
-	for _, v := range metrics {
+	for _, v := range result {
 		_, err := expfmt.MetricFamilyToText(&b, v)
 		if err != nil {
 			panic(err)
