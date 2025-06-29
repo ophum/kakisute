@@ -1,5 +1,5 @@
 module dependabot-test
 
-go 1.22.2
+go 1.23.0
 
-require github.com/sacloud/iaas-service-go v1.10.0
+require github.com/sacloud/iaas-service-go v1.12.0
