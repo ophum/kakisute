@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oras-project/setup-oras@v1
-      - run: echo -n $GITHUB_TOKEN | oras login --identity-token-stdin ghcr.io
+      - run: echo -n $GITHUB_TOKEN | oras login -u ${{ github.actor }} --password-stdin ghcr.io
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: date > output.txt
