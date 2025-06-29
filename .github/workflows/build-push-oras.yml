@@ -1,0 +1,15 @@
+name: Build binary push to github registry using oras
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oras-project/setup-oras@v1
+      - run: oras login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
+      - run: data > output.txt
+      - run: oras push ghcr.io/kakisute/oras-test:${{ github.sha }} output.txt
