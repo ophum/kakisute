@@ -1,0 +1,22 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+processors:
+  batch:
+
+exporters:
+  prometheusremotewrite/prom1:
+    endpoint: http://prom1:9090/api/v1/write
+
+  prometheusremotewrite/prom2:
+    endpoint: http://prom2:9090/api/v1/write
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheusremotewrite/prom1, prometheusremotewrite/prom2]
