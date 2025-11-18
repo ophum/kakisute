@@ -1,0 +1,81 @@
+file_format: "0.3"
+
+disabled: false
+
+attribute_limits:
+  attribute_value_length_limit: 4096
+  attribute_count_limit: 128
+
+logger_provider:
+  processors:
+    - batch:
+        schedule_delay: 5000
+        export_timeout: 30000
+        max_queue_size: 2048
+        max_export_batch_size: 512
+        exporter:
+          otlp:
+            protocol: http/protobuf
+            endpoint: ${LOG_ENDPOINT}
+            headers:
+              - name: Authorization
+                value: "Bearer ${LOG_SECRET}"
+            compression: gzip
+            timeout: 10000
+            insecure: false
+
+propagator:
+  composite: [tracecontext]
+
+tracer_provider:
+  processors:
+    - batch:
+        schedule_delay: 5000
+        export_timeout: 30000
+        max_queue_size: 2048
+        max_export_batch_size: 512
+        exporter:
+          otlp:
+            protocol: http/protobuf
+            endpoint: ${TRACE_ENDPOINT}
+            headers:
+              - name: Authorization
+                value: "Bearer ${TRACE_SECRET}"
+            compression: gzip
+            timeout: 10000
+            insecure: false
+      limits:
+        event_count_limit: 128
+        link_count_limit: 128
+        event_attribute_count_limit: 128
+        link_attribute_count_limit: 128
+      sampler:
+        parent_based:
+          root:
+            trace_id_ratio_based:
+              ratio: 0.5
+          remote_parent_sampled:
+            always_on: {}
+          remote_parent_not_sampled:
+            always_off: {}
+          local_parent_sampled:
+            always_on: {}
+          local_parent_not_sampled:
+            always_off: {}
+    - simple:
+        exporter:
+          console: {}
+
+resource:
+  attributes:
+    - name: service.name
+      value: test_service
+    - name: env
+      value: test
+  detectors:
+    attributes:
+      included:
+        - process.*
+      excluded:
+        - process.command_args
+  schema_url: https://opentelemetry.io/schemas/1.16.0
