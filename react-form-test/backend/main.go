@@ -43,7 +43,7 @@ func run() error {
 		CookiePath:     "/",
 		CookieSecure:   false, // dev
 		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteLaxMode,
+		CookieSameSite: http.SameSiteStrictMode,
 	}))
 
 	e.GET("/login", func(c echo.Context) error {
