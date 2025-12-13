@@ -1,0 +1,3 @@
+# react-form-test
+
+ReactでSPAを実装しつつ認証などRedirectを利用するようなフォームではfetchを使わずに従来のformを使ってみる
