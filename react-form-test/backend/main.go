@@ -39,11 +39,7 @@ func run() error {
 	e.Use(middleware.RequestLogger(), middleware.Recover())
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("changeme-secret"))))
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
-		TokenLookup:    "cookie:_csrf",
-		CookiePath:     "/",
-		CookieSecure:   false, // dev
-		CookieHTTPOnly: true,
-		CookieSameSite: http.SameSiteStrictMode,
+		TokenLookup: "form:_csrf",
 	}))
 
 	e.GET("/login", func(c echo.Context) error {
@@ -65,12 +61,14 @@ func run() error {
 		if form.Username != "user" {
 			v := url.Values{}
 			v.Set("error", "invalid username or password")
+			slog.Info("invalid username")
 			return c.Redirect(http.StatusFound, frontendURL("login", v).String())
 		}
 
 		if subtle.ConstantTimeCompare([]byte(form.Password), []byte("password")) != 1 {
 			v := url.Values{}
 			v.Set("error", "invalid username or password")
+			slog.Info("invalid passwrod")
 			return c.Redirect(http.StatusFound, frontendURL("login", v).String())
 		}
 
@@ -105,6 +103,27 @@ func run() error {
 		return c.JSON(http.StatusOK, map[string]any{
 			"username": username,
 		})
+	})
+
+	e.POST("/change-username", func(c echo.Context) error {
+		type ChangeUsernameForm struct {
+			Username string `form:"username"`
+		}
+		var req ChangeUsernameForm
+		if err := c.Bind(&req); err != nil {
+			return err
+		}
+
+		sess, err := session.Get(sessionName, c)
+		if err != nil {
+			return err
+		}
+
+		sess.Values["username"] = req.Username
+		if err := sess.Save(c.Request(), c.Response()); err != nil {
+			return err
+		}
+		return c.NoContent(http.StatusOK)
 	})
 	return e.Start(":8080")
 }

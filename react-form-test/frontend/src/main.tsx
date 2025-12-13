@@ -1,6 +1,7 @@
 import { StrictMode, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, useNavigate, useSearchParams } from 'react-router'
+import Cookies from "js-cookie";
 
 const router = createBrowserRouter([
   {
@@ -62,18 +63,21 @@ async function getCSRFToken() {
     method: "GET",
     credentials: "include",
   })
+  return Cookies.get()["_csrf"]
 }
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [csrfToken, setCSRFToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams()
   const error = searchParams.get("error")
 
   useEffect(() => {
     setIsLoading(true)
-    getCSRFToken().then(() => {
+    getCSRFToken().then((token) => {
+      setCSRFToken(token)
       setIsLoading(false)
     })
   }, [])
@@ -83,6 +87,7 @@ function LoginPage() {
       {error && <span style={{ color: "red" }}>{error}</span>}
       {isLoading ? "loading..." : (
         <form method="POST" action="http://localhost:8080/login">
+          <input type="hidden" name="_csrf" value={csrfToken} />
           <div>
             <label htmlFor="id">ユーザー名</label>
             <input id="username" type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
