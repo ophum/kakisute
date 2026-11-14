@@ -14,6 +14,7 @@ import (
 	"strings"
 	"sync"
 	"syscall"
+	"time"
 
 	echo "github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
@@ -145,6 +146,12 @@ func run(ctx context.Context) error {
 			}
 		}
 		return echo.ErrNotFound
+	})
+	e.GET("/api/user", func(c *echo.Context) error {
+		time.Sleep(2 * time.Second)
+		return c.JSON(200, map[string]any{
+			"name": "John Doe",
+		})
 	})
 	sc := echo.StartConfig{
 		Address: ":8080",

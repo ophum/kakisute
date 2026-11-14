@@ -10,11 +10,13 @@ import {
 	TableBody,
 	TableCell,
 } from "@/components/ui/table";
+import { UserInfo } from "../components/UserInfo";
 ---
 
 <Layout>
 	<h1>hello index</h1>
 
+	<UserInfo client:load />
 	<LinkButton href="/form">追加</LinkButton>
 
 	<div class="border rounded-md">
