@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Go from "../components/Go.astro";
+import {
+    FieldSet,
+    FieldGroup,
+    Field,
+    FieldLabel,
+    FieldDescription,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/LinkButton";
+---
+
+<Layout>
+    <h1>Hello</h1>
+    <Go v=".Name" />
+
+    <form action="/post" method="POST">
+        <FieldSet>
+            <FieldGroup>
+                <Field>
+                    <FieldLabel htmlFor="name">Name</FieldLabel>
+                    <Input id="name" name="name" type="text" />
+                    <FieldDescription>Please enter your name.</FieldDescription>
+                </Field>
+            </FieldGroup>
+        </FieldSet>
+        <Field orientation="horizontal">
+            <LinkButton href="/">CANCEL</LinkButton>
+            <Button type="submit">SUBMIT</Button>
+        </Field>
+    </form>
+</Layout>

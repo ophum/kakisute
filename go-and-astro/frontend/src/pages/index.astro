@@ -1,0 +1,77 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Go from "../components/Go.astro";
+import { LinkButton } from "@/components/LinkButton";
+import {
+	Table,
+	TableHeader,
+	TableRow,
+	TableHead,
+	TableBody,
+	TableCell,
+} from "@/components/ui/table";
+---
+
+<Layout>
+	<h1>hello index</h1>
+
+	<LinkButton href="/form">追加</LinkButton>
+
+	<div class="border rounded-md">
+		<Table>
+			<TableHeader>
+				<TableRow>
+					<TableHead>名前</TableHead>
+				</TableRow>
+			</TableHeader>
+			<TableBody>
+				<Go v="if eq (len .Names) 0" />
+				<TableRow>
+					<TableCell>登録されていません。</TableCell>
+				</TableRow>
+				<Go v="else" />
+				<Go v="range .Names" />
+				<TableRow>
+					<TableCell>
+						<Go v="." />
+					</TableCell>
+				</TableRow>
+				<Go v="end" />
+				<Go v="end" />
+			</TableBody>
+		</Table>
+	</div>
+
+	<h2 class="text-lg font-bold mt-4">Posts</h2>
+
+	<div class="border rounded-md">
+		<Table>
+			<TableHeader>
+				<TableRow>
+					<TableHead>#</TableHead>
+					<TableHead>post</TableHead>
+				</TableRow>
+			</TableHeader>
+			<TableBody>
+				<Go v="if eq (len .Posts) 0" />
+				<TableRow>
+					<TableCell colspan="2">投稿はありません。</TableCell>
+				</TableRow>
+				<Go v="else" />
+				<Go v="range $index, $elem := .Posts" />
+				<TableRow>
+					<TableCell>
+						<Go v="$index" />
+					</TableCell>
+					<TableCell>
+						<a href="{{ $elem }}">
+							<Go v="$elem" />
+						</a>
+					</TableCell>
+				</TableRow>
+				<Go v="end" />
+				<Go v="end" />
+			</TableBody>
+		</Table>
+	</div>
+</Layout>
